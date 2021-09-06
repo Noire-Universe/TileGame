@@ -4,6 +4,11 @@ import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 
 import dev.noire.tilegame.display.Display;
+import dev.noire.tilegame.gfx.Assets;
+import dev.noire.tilegame.input.KeyManager;
+import dev.noire.tilegame.states.GameState;
+import dev.noire.tilegame.states.MenuState;
+import dev.noire.tilegame.states.State;
 
 public class Game implements Runnable {
 
@@ -22,34 +27,48 @@ public class Game implements Runnable {
 	private Thread thread;
 	
 	//states:
-	
+	public State menuState;
+	public State gameState;
 	
 	//input:
+	private KeyManager keyManager;
 	
 	
 	//game camera:
 	
 	
 	//handler:
-	
+	private Handler handler;
 	
 	//constructor:
 	public Game(String title, int width, int height) {
 		this.title = title;
 		this.width = width;
 		this.height = height;
+	
+		keyManager = new KeyManager();
 		
 	}
 	
 	private void init() {
 		display = new Display(title, width, height);
+		display.getFrame().addKeyListener(keyManager);
 		
+		Assets.init();
+		handler = new Handler(this);
+		
+		menuState = new MenuState(handler);
+		gameState = new GameState(handler);
+		State.setState(gameState);
 	}
 	
 	//game loop:
 	public void tick() {
 		
+		keyManager.tick();
 		
+		if(State.getState()!=null)
+			State.getState().tick();
 		
 	}
 	
@@ -63,7 +82,8 @@ public class Game implements Runnable {
 		g.clearRect(0, 0, width, height);
 		//start drawing...
 		
-		
+		if(State.getState() != null)
+			State.getState().render(g);
 		
 		//...end drawing.
 		bs.show();
@@ -103,6 +123,8 @@ public class Game implements Runnable {
 		
 		stop();
 	}
+	
+	public KeyManager getKeyManager() {return keyManager;}
 	
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
