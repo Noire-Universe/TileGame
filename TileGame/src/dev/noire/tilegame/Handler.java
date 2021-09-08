@@ -1,5 +1,6 @@
 package dev.noire.tilegame;
 
+import dev.noire.tilegame.gfx.GameCamera;
 import dev.noire.tilegame.input.KeyManager;
 import dev.noire.tilegame.worlds.World;
 
@@ -18,7 +19,7 @@ public class Handler {
 	
 	
 	//camera
-	
+	public GameCamera getGameCamera() {return game.getGameCamera();}
 	
 	public int getWidth() {return game.getWidth();}
 	public int getHeight() {return game.getHeight();}

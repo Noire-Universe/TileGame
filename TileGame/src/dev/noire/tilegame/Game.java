@@ -5,6 +5,7 @@ import java.awt.image.BufferStrategy;
 
 import dev.noire.tilegame.display.Display;
 import dev.noire.tilegame.gfx.Assets;
+import dev.noire.tilegame.gfx.GameCamera;
 import dev.noire.tilegame.input.KeyManager;
 import dev.noire.tilegame.states.GameState;
 import dev.noire.tilegame.states.MenuState;
@@ -35,7 +36,7 @@ public class Game implements Runnable {
 	
 	
 	//game camera:
-	
+	private GameCamera gameCamera;
 	
 	//handler:
 	private Handler handler;
@@ -56,7 +57,7 @@ public class Game implements Runnable {
 		
 		Assets.init();
 		handler = new Handler(this);
-		
+		gameCamera = new GameCamera(handler, 0, 0);
 		menuState = new MenuState(handler);
 		gameState = new GameState(handler);
 		State.setState(gameState);
@@ -126,6 +127,7 @@ public class Game implements Runnable {
 	
 	public KeyManager getKeyManager() {return keyManager;}
 	
+	public GameCamera getGameCamera() {return gameCamera;}
 	public int getWidth() {return width;}
 	public int getHeight() {return height;}
 	
