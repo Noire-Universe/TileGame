@@ -18,13 +18,13 @@ public class GameCamera {
 	private void checkBlankSpace() {
 		if(xOffset < 0)
 			xOffset = 0;
-		if(xOffset > handler.getWorld().getWidth() *Tile.TILEWIDTH+handler.getWidth())
-			xOffset = handler.getWorld().getWidth() *Tile.TILEWIDTH+handler.getWidth();
+		if(xOffset > handler.getWorld().getWidth() *Tile.TILEWIDTH-handler.getWidth())
+			xOffset = handler.getWorld().getWidth() *Tile.TILEWIDTH-handler.getWidth();
 		
 		if(yOffset < 0)
 			yOffset = 0;
-		if(yOffset > handler.getWorld().getHeight() *Tile.TILEHEIGHT+handler.getHeight())
-			yOffset = handler.getWorld().getHeight() *Tile.TILEHEIGHT+handler.getHeight();
+		if(yOffset > handler.getWorld().getHeight() *Tile.TILEHEIGHT-handler.getHeight())
+			yOffset = handler.getWorld().getHeight() *Tile.TILEHEIGHT-handler.getHeight();
 	}
 	
 	public void move(float xAmt, float yAmt) {

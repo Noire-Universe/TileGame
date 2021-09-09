@@ -60,7 +60,7 @@ public class Game implements Runnable {
 		gameCamera = new GameCamera(handler, 0, 0);
 		menuState = new MenuState(handler);
 		gameState = new GameState(handler);
-		State.setState(gameState);
+		State.setState(menuState);
 	}
 	
 	//game loop:

@@ -53,7 +53,7 @@ public class Player extends Creature {
 	public void render(Graphics g) {
 		g.drawImage(renderFrame(), (int)(x-handler.getGameCamera().getxOffset()), (int)(y-handler.getGameCamera().getyOffset()), width, height, null);
 		g.setColor(Color.RED);
-		
+		g.drawRect((int)(x+bounds.x-handler.getGameCamera().getxOffset()), (int)(y+bounds.y-handler.getGameCamera().getyOffset()), bounds.width, bounds.height);
 	}
 	
 	public BufferedImage renderFrame() {

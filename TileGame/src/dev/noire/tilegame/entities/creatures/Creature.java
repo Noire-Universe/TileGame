@@ -1,7 +1,10 @@
 package dev.noire.tilegame.entities.creatures;
 
+import java.awt.Rectangle;
+
 import dev.noire.tilegame.Handler;
 import dev.noire.tilegame.entities.Entity;
+import dev.noire.tilegame.tiles.Tile;
 
 public abstract class Creature extends Entity {
 
@@ -23,16 +26,60 @@ public abstract class Creature extends Entity {
 	}
 	
 	public void move() {
-		x += xMove;
-		y += yMove;
+		
+		if(!checkEntityCollision(xMove, 0f))
+			moveX();
+		
+		if(!checkEntityCollision(0f, yMove))
+			moveY();
+		
 	}
 	
 	private void moveX() {
+		
+		if(xMove > 0) { //left
+			int tx = (int)(x + xMove + bounds.x + bounds.width)/Tile.TILEWIDTH;
+			if(!collisionWithTile(tx, (int)(y + bounds.y)/Tile.TILEHEIGHT) &&
+					!collisionWithTile(tx, (int)(y + bounds.y + bounds.height)/Tile.TILEHEIGHT)) {
+				x += xMove;
+			}else {
+				x = tx*Tile.TILEWIDTH-bounds.x-bounds.width-1;
+			}
+		}else if(xMove < 0) {
+			int tx = (int)(x + xMove + bounds.x)/Tile.TILEWIDTH;
+			if(!collisionWithTile(tx, (int)(y + bounds.y)/Tile.TILEHEIGHT) &&
+					!collisionWithTile(tx, (int)(y + bounds.y + bounds.height)/Tile.TILEHEIGHT)) {
+				x += xMove;
+			}else {
+				x = tx*Tile.TILEWIDTH+Tile.TILEWIDTH-bounds.x;
+			}
+		}
 		
 	}
 	
 	private void moveY() {
 		
+		if(yMove > 0) {//right
+			int ty = (int)(y + yMove + bounds.y + bounds.height)/Tile.TILEHEIGHT;
+			if(!collisionWithTile((int)(x + bounds.x)/Tile.TILEWIDTH, ty) &&
+					!collisionWithTile((int)(x + bounds.x + bounds.width)/Tile.TILEWIDTH, ty)) {
+				y += yMove;
+			}else {
+				y = ty*Tile.TILEHEIGHT-bounds.y-bounds.height-1;
+			}
+		}else if(yMove < 0) {
+			int ty = (int)(y + yMove + bounds.y)/Tile.TILEHEIGHT;
+			if(!collisionWithTile((int)(x + bounds.x)/Tile.TILEWIDTH, ty) &&
+					!collisionWithTile((int)(x + bounds.x + bounds.width)/Tile.TILEWIDTH, ty)) {
+				y += yMove;
+			}else {
+				y = ty*Tile.TILEHEIGHT+Tile.TILEHEIGHT-bounds.y;
+			}
+		}
+	}
+	
+	private boolean collisionWithTile(int x, int y) {
+		return handler.getWorld().getTile(x, y).isSolid();
 	}
 
 	//GETTERS & SETTERS:
